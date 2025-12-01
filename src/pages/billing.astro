@@ -1,0 +1,318 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import SubscriptionWatcher from '../components/SubscriptionWatcher';
+import { getSession } from '../lib/auth';
+import { BILLING } from '../lib/constants';
+
+const session = getSession(Astro.cookies);
+
+// Redirect to login if not authenticated
+if (!session) {
+  return Astro.redirect('/api/auth/login');
+}
+---
+
+<Layout>
+  <div class="min-h-screen bg-surface-page">
+    <!-- Header / Navbar -->
+    <Header />
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Page Header -->
+      <div class="mb-8 text-center">
+        <p class="text-sm text-text-faint uppercase tracking-wide mb-1">Pricing</p>
+        <h2 class="text-3xl font-bold text-text-primary mb-2">Choose Your Plan</h2>
+        <p class="text-lg text-text-muted">Select the plan that best fits your needs</p>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <!-- Free Plan -->
+        <div class="bg-surface-primary rounded-2xl shadow-sm border-2 border-default p-8 relative">
+          <div class="mb-6">
+            <h3 class="text-2xl font-bold text-text-primary mb-2">Free</h3>
+            <div class="flex items-baseline gap-2">
+              <span class="text-4xl font-bold text-text-primary">$0</span>
+              <span class="text-text-faint">/month</span>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <p class="text-text-muted mb-6">Perfect for personal projects and getting started</p>
+
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-success-icon mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-text-secondary">Real-time workflow updates</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-success-icon mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-text-secondary">Workflow history up to <strong>{BILLING.FREE_DAYS_LIMIT} days</strong></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-success-icon mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-text-secondary">Personal repositories only</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-text-faint mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span class="text-text-faint">Organization repositories</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-text-faint mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span class="text-text-faint">Extended workflow history</span>
+              </li>
+            </ul>
+          </div>
+
+          <div id="free-plan-cta"></div>
+        </div>
+
+        <!-- Paid Plan -->
+        <div class="bg-surface-primary rounded-2xl shadow-xl border-2 border-brand-primary p-8 relative">
+          <!-- Popular Badge -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+            <span class="bg-gradient-to-r from-brand-primary to-brand-primary-hover text-white text-sm font-semibold px-4 py-1 rounded-full shadow-lg">
+              Recommended
+            </span>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-2xl font-bold text-text-primary mb-2">Pro</h3>
+            <div class="flex items-baseline gap-2">
+              <span class="text-4xl font-bold text-text-primary">$4.99</span>
+              <span class="text-text-faint">/month</span>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <p class="text-text-muted mb-6">For teams and power users who need more</p>
+
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-success-icon mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-text-secondary">Real-time workflow updates</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-success-icon mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-text-secondary">Workflow history up to <strong>31 days</strong></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-success-icon mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-text-secondary">Personal repositories</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-success-icon mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-text-secondary"><strong>Organization repositories</strong></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-success-icon mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-text-secondary"><strong>Priority support</strong></span>
+              </li>
+            </ul>
+          </div>
+
+          <div id="paid-plan-cta"></div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="mt-16 max-w-3xl mx-auto">
+        <h3 class="text-2xl font-bold text-text-primary mb-8 text-center">Frequently Asked Questions</h3>
+
+        <div class="space-y-6">
+          <div class="bg-surface-primary rounded-lg shadow-sm border border-default p-6">
+            <h4 class="font-semibold text-text-primary mb-2">Can I switch plans at any time?</h4>
+            <p class="text-text-muted">Yes! You can upgrade or downgrade your plan at any time. Changes will be reflected immediately.</p>
+          </div>
+
+          <div class="bg-surface-primary rounded-lg shadow-sm border border-default p-6">
+            <h4 class="font-semibold text-text-primary mb-2">What happens to my data when I downgrade?</h4>
+            <p class="text-text-muted">Your data remains safe. However, you'll only be able to view workflow history within the limits of your new plan.</p>
+          </div>
+
+          <div class="bg-surface-primary rounded-lg shadow-sm border border-default p-6">
+            <h4 class="font-semibold text-text-primary mb-2">Do you offer refunds?</h4>
+            <p class="text-text-muted">Yes, we offer a 14-day money-back guarantee. If you're not satisfied, contact us for a full refund.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Subscription watcher component -->
+  <SubscriptionWatcher client:only="preact" />
+
+  <!-- Client-side script to handle CTAs based on user tier -->
+  <script>
+    import { fetchAndCacheUser } from '../lib/constants';
+
+    // Check if we just completed a successful payment
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      // Payment completed - fetch new subscription status and update cache
+      (async () => {
+        try {
+          // Fetch updated subscription status
+          const response = await fetch('/api/billing/check-subscription');
+          if (response.ok) {
+            const data = await response.json();
+
+            // Save new subscription status to localStorage
+            const subscriptionStatus = {
+              hasActiveSubscription: data.hasActiveSubscription,
+              userTier: data.userTier,
+              lastChecked: Date.now(),
+            };
+            localStorage.setItem('subscription_status', JSON.stringify(subscriptionStatus));
+
+            console.log('Subscription upgraded successfully:', data.userTier);
+          }
+        } catch (error) {
+          console.error('Error fetching subscription status:', error);
+        } finally {
+          // Clear session cache to force refresh of user info
+          sessionStorage.removeItem('gh_user_info');
+
+          // Clear ALL workflow caches (user now has access to org repos)
+          Object.keys(localStorage).forEach((key) => {
+            if (key.startsWith('workflows_cache_')) {
+              localStorage.removeItem(key);
+            }
+          });
+
+          // Remove the query parameters from URL
+          window.history.replaceState({}, document.title, '/billing');
+
+          // Reload to apply new permissions
+          window.location.reload();
+        }
+      })();
+    }
+
+    async function handleUpgrade() {
+      try {
+        const response = await fetch('/api/billing/create-checkout-session', {
+          method: 'POST',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create checkout session');
+        }
+
+        const data = await response.json();
+        if (data.url) {
+          window.location.href = data.url;
+        }
+      } catch (error) {
+        console.error('Error creating checkout session:', error);
+        alert('Failed to start checkout. Please try again.');
+      }
+    }
+
+    async function handleManageSubscription() {
+      try {
+        const response = await fetch('/api/billing/create-portal-session', {
+          method: 'POST',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create portal session');
+        }
+
+        const data = await response.json();
+        if (data.url) {
+          window.location.href = data.url;
+        }
+      } catch (error) {
+        console.error('Error creating portal session:', error);
+        alert('Failed to open billing portal. Please try again.');
+      }
+    }
+
+    async function updateCTAs() {
+      try {
+        const user = await fetchAndCacheUser();
+
+        if (!user?.authenticated || !user?.billingConfig?.billingEnabled) {
+          return;
+        }
+
+        const isPaidUser = user.billingConfig.userTier === 'paid';
+
+        const freeCTA = document.getElementById('free-plan-cta');
+        const paidCTA = document.getElementById('paid-plan-cta');
+
+        if (isPaidUser) {
+          // User is on paid plan
+          if (freeCTA) {
+            freeCTA.innerHTML = `
+              <button onclick="handleManageSubscription()" class="w-full px-6 py-3 bg-surface-tertiary text-text-muted font-medium rounded-lg hover:bg-surface-hover transition-colors">
+                Manage Subscription
+              </button>
+            `;
+          }
+
+          if (paidCTA) {
+            paidCTA.innerHTML = `
+              <div class="space-y-3">
+                <div class="w-full px-6 py-3 bg-success-bg text-success-text font-medium rounded-lg border-2 border-success-border text-center">
+                  Current Plan
+                </div>
+                <button onclick="handleManageSubscription()" class="w-full px-6 py-3 bg-surface-primary text-text-secondary font-medium rounded-lg border-2 border-default hover:bg-surface-hover transition-colors cursor-pointer">
+                  Manage Subscription
+                </button>
+              </div>
+            `;
+          }
+        } else {
+          // User is on free plan
+          if (freeCTA) {
+            freeCTA.innerHTML = `
+              <div class="w-full px-6 py-3 bg-info-bg text-info-text font-medium rounded-lg border-2 border-info-border text-center">
+                Current Plan
+              </div>
+            `;
+          }
+
+          if (paidCTA) {
+            paidCTA.innerHTML = `
+              <button onclick="handleUpgrade()" class="w-full px-6 py-3 bg-gradient-to-r from-brand-primary to-brand-primary-hover text-white font-medium rounded-lg hover:opacity-90 transition-all shadow-md hover:shadow-lg cursor-pointer">
+                Upgrade to Pro
+              </button>
+            `;
+          }
+        }
+
+        // Make functions globally available
+        (window as any).handleUpgrade = handleUpgrade;
+        (window as any).handleManageSubscription = handleManageSubscription;
+      } catch (error) {
+        console.error('Error updating CTAs:', error);
+      }
+    }
+
+    // Update CTAs when page loads
+    updateCTAs();
+  </script>
+</Layout>

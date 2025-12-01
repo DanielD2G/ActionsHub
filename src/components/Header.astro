@@ -1,0 +1,44 @@
+---
+import LoginButton from './LoginButton';
+import BillingButton from './BillingButton';
+import ThemeToggle from './ThemeToggle';
+
+const logoLight = import.meta.env.IMAGE_URL_LIGHT;
+const logoDark = import.meta.env.IMAGE_URL_DARK;
+const hasCustomLogo = logoLight || logoDark;
+---
+
+<header class="bg-surface-primary border-b border-default">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center gap-3">
+        {hasCustomLogo ? (
+          <a href="/" class="flex items-center gap-4 hover:opacity-80 transition-opacity">
+            {logoLight && logoDark ? (
+              <>
+                <img src={logoLight} alt="Logo" class="h-10 w-auto max-w-[120px] object-contain dark:hidden" />
+                <img src={logoDark} alt="Logo" class="h-10 w-auto max-w-[120px] object-contain hidden dark:block" />
+              </>
+            ) : (
+              <img src={logoLight || logoDark} alt="Logo" class="h-10 w-auto max-w-[120px] object-contain" />
+            )}
+            <div class="flex flex-col">
+              <span class="text-[10px] uppercase tracking-wider text-text-faint font-medium">powered by</span>
+              <span class="text-sm font-semibold text-text-secondary" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;">Actions Hub</span>
+            </div>
+          </a>
+        ) : (
+          <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <img src="/logo.svg" alt="Actions Hub" class="w-8 h-8" />
+            <h1 class="text-lg font-semibold text-text-primary" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;">Actions Hub</h1>
+          </a>
+        )}
+      </div>
+      <div class="flex items-center gap-3">
+        <ThemeToggle client:load />
+        <BillingButton client:load />
+        <LoginButton client:load />
+      </div>
+    </div>
+  </div>
+</header>

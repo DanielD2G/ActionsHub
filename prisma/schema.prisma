@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Subscription {
+  id                   String   @id @default(cuid())
+  githubUserId         String   @unique @map("github_user_id")
+  polarCustomerId      String   @unique @map("polar_customer_id")
+  polarSubscriptionId  String   @unique @map("polar_subscription_id")
+  polarPriceId         String   @map("polar_price_id")
+  status               String   // active, canceled, past_due, etc.
+  currentPeriodStart   DateTime @map("current_period_start")
+  currentPeriodEnd     DateTime @map("current_period_end")
+  cancelAtPeriodEnd    Boolean  @default(false) @map("cancel_at_period_end")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@map("subscriptions")
+  @@index([githubUserId])
+  @@index([polarCustomerId])
+  @@index([polarSubscriptionId])
+}

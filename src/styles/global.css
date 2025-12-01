@@ -1,0 +1,400 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source "../**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
+
+/*
+ * Design System Colors
+ *
+ * These CSS custom properties define the color palette for the entire app.
+ * Variables are defined in :root (light) and .dark (dark mode).
+ * Then mapped to Tailwind utilities via @theme inline.
+ */
+
+/* ===========================================
+ * LIGHT THEME (Default)
+ * =========================================== */
+:root {
+  /* Surface colors */
+  --surface-page: #f9fafb;
+  --surface-primary: #ffffff;
+  --surface-secondary: #f9fafb;
+  --surface-tertiary: #f3f4f6;
+  --surface-hover: #f9fafb;
+  --surface-active: #f3f4f6;
+
+  /* Text colors */
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --text-faint: #9ca3af;
+  --text-inverted: #ffffff;
+
+  /* Border colors */
+  --border-default: #e5e7eb;
+  --border-strong: #d1d5db;
+
+  /* Brand colors */
+  --brand-primary: #2563eb;
+  --brand-primary-hover: #1d4ed8;
+  --brand-primary-light: #eff6ff;
+  --brand-primary-muted: #dbeafe;
+
+  /* Gradient colors */
+  --brand-gradient-from: #9333ea;
+  --brand-gradient-to: #2563eb;
+  --brand-gradient-from-hover: #7e22ce;
+  --brand-gradient-to-hover: #1d4ed8;
+
+  /* Status - Success */
+  --success-bg: #f0fdf4;
+  --success-bg-muted: #dcfce7;
+  --success-bg-solid: #16a34a;
+  --success-text: #15803d;
+  --success-text-emphasis: #166534;
+  --success-border: #bbf7d0;
+  --success-icon: #16a34a;
+
+  /* Status - Error */
+  --error-bg: #fef2f2;
+  --error-bg-muted: #fee2e2;
+  --error-bg-solid: #dc2626;
+  --error-text: #b91c1c;
+  --error-text-emphasis: #991b1b;
+  --error-border: #fecaca;
+  --error-icon: #dc2626;
+
+  /* Status - Warning */
+  --warning-bg: #fefce8;
+  --warning-bg-muted: #fef9c3;
+  --warning-bg-solid: #eab308;
+  --warning-text: #a16207;
+  --warning-text-emphasis: #854d0e;
+  --warning-border: #fef08a;
+  --warning-icon: #ca8a04;
+
+  /* Status - Info */
+  --info-bg: #eff6ff;
+  --info-bg-muted: #dbeafe;
+  --info-bg-solid: #2563eb;
+  --info-text: #1d4ed8;
+  --info-text-emphasis: #1e40af;
+  --info-border: #bfdbfe;
+  --info-icon: #2563eb;
+
+  /* Status - Neutral */
+  --neutral-bg: #f3f4f6;
+  --neutral-bg-solid: #9ca3af;
+  --neutral-text: #4b5563;
+  --neutral-text-emphasis: #1f2937;
+  --neutral-border: #e5e7eb;
+  --neutral-icon: #4b5563;
+
+  /* Button colors */
+  --button-primary-bg: #2563eb;
+  --button-primary-bg-hover: #1d4ed8;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #ffffff;
+  --button-secondary-bg-hover: #f9fafb;
+  --button-secondary-text: #374151;
+  --button-secondary-border: #d1d5db;
+  --button-danger-bg: #dc2626;
+  --button-danger-bg-hover: #b91c1c;
+  --button-danger-text: #ffffff;
+  --button-dark-bg: #111827;
+  --button-dark-bg-hover: #1f2937;
+  --button-dark-text: #ffffff;
+
+  /* Log viewer colors (always dark) */
+  --log-bg: #030712;
+  --log-bg-header: #111827;
+  --log-bg-hover: #1f2937;
+  --log-bg-footer: rgba(17, 24, 39, 0.5);
+  --log-border: #1f2937;
+  --log-text: #d1d5db;
+  --log-text-muted: #9ca3af;
+  --log-text-faint: #6b7280;
+  --log-line-number: #4b5563;
+  --log-error-bg: rgba(127, 29, 29, 0.5);
+  --log-error-bg-hover: rgba(127, 29, 29, 0.7);
+  --log-error-text: #fca5a5;
+  --log-error-text-hover: #fecaca;
+  --log-error-indicator: #f87171;
+  --log-warning-bg: rgba(113, 63, 18, 0.5);
+  --log-warning-bg-hover: rgba(113, 63, 18, 0.7);
+  --log-warning-text: #fde047;
+  --log-warning-text-hover: #fef08a;
+  --log-warning-indicator: #facc15;
+  --log-success-indicator: #4ade80;
+  --log-success-bg: #16a34a;
+  --log-success-text: #ffffff;
+
+  /* Accent colors */
+  --accent-purple-light: #f3e8ff;
+  --accent-purple: #9333ea;
+  --accent-indigo-light: #eef2ff;
+  --accent-indigo: #4f46e5;
+
+  /* Spinner colors */
+  --spinner-track: #e5e7eb;
+  --spinner-indicator: #2563eb;
+}
+
+/* ===========================================
+ * DARK THEME
+ * =========================================== */
+.dark {
+  /* Surface colors */
+  --surface-page: #030712;
+  --surface-primary: #111827;
+  --surface-secondary: #1f2937;
+  --surface-tertiary: #374151;
+  --surface-hover: #1f2937;
+  --surface-active: #374151;
+
+  /* Text colors */
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --text-faint: #6b7280;
+  --text-inverted: #111827;
+
+  /* Border colors */
+  --border-default: #374151;
+  --border-strong: #4b5563;
+
+  /* Brand colors */
+  --brand-primary: #3b82f6;
+  --brand-primary-hover: #60a5fa;
+  --brand-primary-light: #172554;
+  --brand-primary-muted: #1e3a8a;
+
+  /* Status - Success */
+  --success-bg: #052e16;
+  --success-bg-muted: #14532d;
+  --success-bg-solid: #16a34a;
+  --success-text: #4ade80;
+  --success-text-emphasis: #86efac;
+  --success-border: #166534;
+  --success-icon: #22c55e;
+
+  /* Status - Error */
+  --error-bg: #450a0a;
+  --error-bg-muted: #7f1d1d;
+  --error-bg-solid: #dc2626;
+  --error-text: #f87171;
+  --error-text-emphasis: #fca5a5;
+  --error-border: #991b1b;
+  --error-icon: #ef4444;
+
+  /* Status - Warning */
+  --warning-bg: #422006;
+  --warning-bg-muted: #713f12;
+  --warning-bg-solid: #ca8a04;
+  --warning-text: #facc15;
+  --warning-text-emphasis: #fde047;
+  --warning-border: #854d0e;
+  --warning-icon: #eab308;
+
+  /* Status - Info */
+  --info-bg: #172554;
+  --info-bg-muted: #1e3a8a;
+  --info-bg-solid: #2563eb;
+  --info-text: #60a5fa;
+  --info-text-emphasis: #93c5fd;
+  --info-border: #1e40af;
+  --info-icon: #3b82f6;
+
+  /* Status - Neutral */
+  --neutral-bg: #1f2937;
+  --neutral-bg-solid: #6b7280;
+  --neutral-text: #9ca3af;
+  --neutral-text-emphasis: #d1d5db;
+  --neutral-border: #374151;
+  --neutral-icon: #9ca3af;
+
+  /* Button colors */
+  --button-primary-bg: #2563eb;
+  --button-primary-bg-hover: #3b82f6;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #1f2937;
+  --button-secondary-bg-hover: #374151;
+  --button-secondary-text: #e5e7eb;
+  --button-secondary-border: #4b5563;
+  --button-danger-bg: #dc2626;
+  --button-danger-bg-hover: #ef4444;
+  --button-danger-text: #ffffff;
+  --button-dark-bg: #f3f4f6;
+  --button-dark-bg-hover: #e5e7eb;
+  --button-dark-text: #111827;
+
+  /* Accent colors */
+  --accent-purple-light: #581c87;
+  --accent-purple: #a855f7;
+  --accent-indigo-light: #312e81;
+  --accent-indigo: #818cf8;
+
+  /* Spinner colors */
+  --spinner-track: #374151;
+  --spinner-indicator: #3b82f6;
+}
+
+/* ===========================================
+ * MAP VARIABLES TO TAILWIND UTILITIES
+ * =========================================== */
+@theme inline {
+  /* Surface colors */
+  --color-surface-page: var(--surface-page);
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-tertiary: var(--surface-tertiary);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-active: var(--surface-active);
+
+  /* Text colors */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+  --color-text-inverted: var(--text-inverted);
+
+  /* Border colors */
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+
+  /* Brand colors */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-brand-primary-light: var(--brand-primary-light);
+  --color-brand-primary-muted: var(--brand-primary-muted);
+  --color-brand-gradient-from: var(--brand-gradient-from);
+  --color-brand-gradient-to: var(--brand-gradient-to);
+  --color-brand-gradient-from-hover: var(--brand-gradient-from-hover);
+  --color-brand-gradient-to-hover: var(--brand-gradient-to-hover);
+
+  /* Status - Success */
+  --color-success-bg: var(--success-bg);
+  --color-success-bg-muted: var(--success-bg-muted);
+  --color-success-bg-solid: var(--success-bg-solid);
+  --color-success-text: var(--success-text);
+  --color-success-text-emphasis: var(--success-text-emphasis);
+  --color-success-border: var(--success-border);
+  --color-success-icon: var(--success-icon);
+
+  /* Status - Error */
+  --color-error-bg: var(--error-bg);
+  --color-error-bg-muted: var(--error-bg-muted);
+  --color-error-bg-solid: var(--error-bg-solid);
+  --color-error-text: var(--error-text);
+  --color-error-text-emphasis: var(--error-text-emphasis);
+  --color-error-border: var(--error-border);
+  --color-error-icon: var(--error-icon);
+
+  /* Status - Warning */
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-bg-muted: var(--warning-bg-muted);
+  --color-warning-bg-solid: var(--warning-bg-solid);
+  --color-warning-text: var(--warning-text);
+  --color-warning-text-emphasis: var(--warning-text-emphasis);
+  --color-warning-border: var(--warning-border);
+  --color-warning-icon: var(--warning-icon);
+
+  /* Status - Info */
+  --color-info-bg: var(--info-bg);
+  --color-info-bg-muted: var(--info-bg-muted);
+  --color-info-bg-solid: var(--info-bg-solid);
+  --color-info-text: var(--info-text);
+  --color-info-text-emphasis: var(--info-text-emphasis);
+  --color-info-border: var(--info-border);
+  --color-info-icon: var(--info-icon);
+
+  /* Status - Neutral */
+  --color-neutral-bg: var(--neutral-bg);
+  --color-neutral-bg-solid: var(--neutral-bg-solid);
+  --color-neutral-text: var(--neutral-text);
+  --color-neutral-text-emphasis: var(--neutral-text-emphasis);
+  --color-neutral-border: var(--neutral-border);
+  --color-neutral-icon: var(--neutral-icon);
+
+  /* Button colors */
+  --color-button-primary-bg: var(--button-primary-bg);
+  --color-button-primary-hover: var(--button-primary-bg-hover);
+  --color-button-primary-bg-hover: var(--button-primary-bg-hover);
+  --color-button-primary-text: var(--button-primary-text);
+  --color-button-secondary-bg: var(--button-secondary-bg);
+  --color-button-secondary-bg-hover: var(--button-secondary-bg-hover);
+  --color-button-secondary-text: var(--button-secondary-text);
+  --color-button-secondary-border: var(--button-secondary-border);
+  --color-button-danger-bg: var(--button-danger-bg);
+  --color-button-danger-hover: var(--button-danger-bg-hover);
+  --color-button-danger-text: var(--button-danger-text);
+  --color-button-dark-bg: var(--button-dark-bg);
+  --color-button-dark-bg-hover: var(--button-dark-bg-hover);
+  --color-button-dark-text: var(--button-dark-text);
+
+  /* Log viewer colors */
+  --color-log-bg: var(--log-bg);
+  --color-log-bg-header: var(--log-bg-header);
+  --color-log-bg-hover: var(--log-bg-hover);
+  --color-log-bg-footer: var(--log-bg-footer);
+  --color-log-border: var(--log-border);
+  --color-log-text: var(--log-text);
+  --color-log-text-muted: var(--log-text-muted);
+  --color-log-text-faint: var(--log-text-faint);
+  --color-log-line-number: var(--log-line-number);
+  --color-log-error-bg: var(--log-error-bg);
+  --color-log-error-bg-hover: var(--log-error-bg-hover);
+  --color-log-error-text: var(--log-error-text);
+  --color-log-error-text-hover: var(--log-error-text-hover);
+  --color-log-error-indicator: var(--log-error-indicator);
+  --color-log-warning-bg: var(--log-warning-bg);
+  --color-log-warning-bg-hover: var(--log-warning-bg-hover);
+  --color-log-warning-text: var(--log-warning-text);
+  --color-log-warning-text-hover: var(--log-warning-text-hover);
+  --color-log-warning-indicator: var(--log-warning-indicator);
+  --color-log-success-indicator: var(--log-success-indicator);
+  --color-log-success-bg: var(--log-success-bg);
+  --color-log-success-text: var(--log-success-text);
+
+  /* Accent colors */
+  --color-accent-purple-light: var(--accent-purple-light);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-indigo-light: var(--accent-indigo-light);
+  --color-accent-indigo: var(--accent-indigo);
+
+  /* Spinner colors */
+  --color-spinner-track: var(--spinner-track);
+  --color-spinner-indicator: var(--spinner-indicator);
+}
+
+/* Utility classes using semantic colors */
+@layer utilities {
+  .bg-page {
+    background-color: var(--surface-page);
+  }
+
+  .bg-surface {
+    background-color: var(--surface-primary);
+  }
+
+  .bg-surface-secondary {
+    background-color: var(--surface-secondary);
+  }
+
+  .text-heading {
+    color: var(--text-primary);
+  }
+
+  .text-body {
+    color: var(--text-secondary);
+  }
+
+  .text-caption {
+    color: var(--text-muted);
+  }
+
+  .border-default {
+    border-color: var(--border-default);
+  }
+}

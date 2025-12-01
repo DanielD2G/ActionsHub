@@ -1,0 +1,38 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Header from '../../../../components/Header.astro';
+import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import WorkflowDetails from '../../../../components/WorkflowDetails';
+import { getSession } from '../../../../lib/auth';
+
+const session = getSession(Astro.cookies);
+
+if (!session) {
+  return Astro.redirect('/');
+}
+
+const { owner, repo, runId } = Astro.params;
+---
+
+<Layout title={`Workflow Run #${runId} - ${owner}/${repo}`}>
+  <div class="min-h-screen bg-surface-page">
+    <!-- Header / Navbar -->
+    <Header />
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Breadcrumb -->
+      <Breadcrumb items={[
+        { label: 'Dashboard', href: '/' },
+        { label: `${owner}/${repo}`, href: `/repository/${owner}/${repo}` },
+        { label: `Run #${runId}` }
+      ]} />
+
+      <WorkflowDetails
+        owner={owner!}
+        repo={repo!}
+        runId={runId!}
+        client:load
+      />
+    </main>
+  </div>
+</Layout>

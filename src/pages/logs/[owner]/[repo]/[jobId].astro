@@ -1,0 +1,84 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Header from '../../../../components/Header.astro';
+import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import LogViewer from '../../../../components/LogViewer';
+import TestSummaryCard from '../../../../components/TestSummaryCard';
+import { getSession } from '../../../../lib/auth';
+import { parseTestResults } from '../../../../lib/test-parsers';
+
+const session = getSession(Astro.cookies);
+
+if (!session) {
+  return Astro.redirect('/');
+}
+
+const { owner, repo, jobId } = Astro.params;
+
+// We'll pass the runId and jobName through query params if available
+const runId = Astro.url.searchParams.get('runId');
+const jobName = Astro.url.searchParams.get('jobName');
+
+// Fetch logs on the server side
+let logs = '';
+let error = null;
+try {
+  const response = await fetch(`${Astro.url.origin}/api/workflows/${owner}/${repo}/jobs/${jobId}/logs`, {
+    headers: {
+      'Cookie': Astro.request.headers.get('Cookie') || ''
+    }
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    logs = data.logs || 'No logs available';
+  } else {
+    error = 'Failed to load logs';
+  }
+} catch (err) {
+  console.error('Error fetching logs:', err);
+  error = 'Failed to load logs';
+}
+
+// Parse test results
+const testResult = parseTestResults(logs);
+---
+
+<Layout title={`Logs - ${jobName || 'Job'} - ${owner}/${repo}`}>
+  <div class="min-h-screen bg-surface-page">
+    <!-- Header / Navbar -->
+    <Header />
+
+    <main class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <!-- Breadcrumb -->
+      <Breadcrumb items={[
+        { label: 'Dashboard', href: '/' },
+        { label: `${owner}/${repo}`, href: `/repository/${owner}/${repo}` },
+        { label: `Run #${runId}`, href: `/workflow/${owner}/${repo}/${runId}` },
+        { label: jobName || 'Logs' }
+      ]} />
+
+      <!-- Test Summary Card -->
+      {testResult && (
+        <TestSummaryCard testResult={testResult} defaultCollapsed={true} client:load />
+      )}
+
+      <!-- Logs Container -->
+      <div class="bg-surface-primary rounded-xl shadow-sm border border-default overflow-hidden">
+        {error ? (
+          <div class="bg-error-bg border border-error-border rounded-lg p-6 m-6">
+            <p class="text-error-text">Error: {error}</p>
+          </div>
+        ) : (
+          <LogViewer
+            logs={logs}
+            owner={owner}
+            repo={repo}
+            jobId={jobId}
+            client:load
+          />
+        )}
+      </div>
+    </main>
+  </div>
+</Layout>

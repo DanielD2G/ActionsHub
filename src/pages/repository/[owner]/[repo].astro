@@ -1,0 +1,50 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import RepositoryWorkflows from '../../../components/RepositoryWorkflows';
+import { getSession } from '../../../lib/auth';
+
+const { owner, repo } = Astro.params;
+const session = getSession(Astro.cookies);
+
+if (!session) {
+  return Astro.redirect('/');
+}
+
+if (!owner || !repo) {
+  return Astro.redirect('/');
+}
+---
+
+<Layout title={`${owner}/${repo} - Workflows`}>
+  <div class="min-h-screen bg-surface-page">
+    <!-- Header / Navbar -->
+    <Header />
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Breadcrumb -->
+      <Breadcrumb items={[
+        { label: 'Dashboard', href: '/' },
+        { label: `${owner}/${repo}` }
+      ]} />
+
+      <!-- Page Header -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <svg class="w-8 h-8 text-text-faint" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+          </svg>
+          <h2 class="text-3xl font-bold text-text-primary">{owner}/{repo}</h2>
+        </div>
+        <p class="text-text-faint">Workflow runs for this repository</p>
+      </div>
+
+      <!-- Workflows List -->
+      <div class="bg-surface-primary rounded-xl shadow-sm border border-default p-6">
+        <h3 class="text-lg font-semibold text-text-primary mb-4">Workflow Runs</h3>
+        <RepositoryWorkflows owner={owner!} repo={repo!} client:load />
+      </div>
+    </main>
+  </div>
+</Layout>
