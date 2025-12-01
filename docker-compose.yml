@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  actions-hub:
+    image: ghcr.io/danield2g/actionshub:1.0.0
+    container_name: actions-hub
+    ports:
+      - "4321:4321"
+    environment:
+      # GitHub OAuth Configuration
+      # Get these from: https://github.com/settings/developers
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID:-your_github_client_id}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET:-your_github_client_secret}
+      - GITHUB_CALLBACK_URL=${GITHUB_CALLBACK_URL:-http://localhost:4321/api/auth/callback}
+
+      # Session Secret - Generate with: openssl rand -base64 32
+      - SESSION_SECRET=${SESSION_SECRET:-your_random_secret_here}
+
+      # Optional: Restrict to a specific organization
+      - GITHUB_ORG=${GITHUB_ORG:-}
+
+      # Production settings
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=4321
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:4321/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

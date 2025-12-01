@@ -51,7 +51,7 @@ docker run -p 4321:4321 \
   -e GITHUB_CLIENT_SECRET=your_github_client_secret \
   -e GITHUB_CALLBACK_URL=http://localhost:4321/api/auth/callback \
   -e SESSION_SECRET=your_random_secret_here \
-  ghcr.io/danield2g/ghadashboard:1.0.0
+  ghcr.io/danield2g/actionshub:1.0.0
 ```
 
 Then open http://localhost:4321 in your browser.
