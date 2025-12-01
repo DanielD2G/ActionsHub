@@ -345,12 +345,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [GNU Affero General Public License v3.0](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- Built with [Astro](https://astro.build)
-- UI components styled with [Tailwind CSS](https://tailwindcss.com)
 - Icons from [Heroicons](https://heroicons.com)
 - GitHub API integration via [Octokit](https://github.com/octokit)
 
