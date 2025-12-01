@@ -4,7 +4,7 @@ A modern, real-time dashboard for monitoring and managing GitHub Actions workflo
 
 ## 🌐 Try it Now
 
-**For personal use**, you can access the live dashboard at: **[gha-dashboard.vercel.app](https://gha-dashboard.vercel.app)**
+**Live Version Available!**, you can access the live dashboard at: **[actions-hub.dev](https://actions-hub.dev)**
 
 Simply sign in with your GitHub account and start monitoring your workflows immediately - no setup required!
 
