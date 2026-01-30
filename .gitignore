@@ -28,3 +28,4 @@ pnpm-debug.log*
 # markdown files except README
 *.md
 !README.md
+!PLAN_NEW_FEATURES.md
